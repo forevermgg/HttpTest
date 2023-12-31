@@ -50,6 +50,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         thread/Format.cpp
         thread/KAssert.cpp
         thread/SingleThreadExecutor.cpp
+
+        json/value_as.cc
         )
 
 
