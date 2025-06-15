@@ -23,8 +23,7 @@
 #include "absl/status/statusor.h"
 #include "http_request.h"
 #include "http_response.h"
-#include "internal/platform/mutex.h"
-#include "internal/platform/mutex_lock.h"
+#include <mutex>
 
 namespace nearby {
 namespace network {
@@ -38,22 +37,22 @@ class HttpClient {
     ~CancellableRequest() = default;
 
     bool is_cancelled() ABSL_LOCKS_EXCLUDED(mutex_) {
-      MutexLock lock(&mutex_);
+      std::lock_guard<std::mutex> lock(mutex_);
       return is_cancelled_;
     }
 
     void cancel() ABSL_LOCKS_EXCLUDED(mutex_) {
-      MutexLock lock(&mutex_);
+      std::lock_guard<std::mutex> lock(mutex_);
       is_cancelled_ = true;
     }
 
     const HttpRequest& http_request() ABSL_LOCKS_EXCLUDED(mutex_) {
-      MutexLock lock(&mutex_);
+      std::lock_guard<std::mutex> lock(mutex_);
       return http_request_;
     }
 
    private:
-    Mutex mutex_;
+    std::mutex mutex_;
     bool is_cancelled_ ABSL_GUARDED_BY(mutex_) = false;
     HttpRequest http_request_ ABSL_GUARDED_BY(mutex_);
   };

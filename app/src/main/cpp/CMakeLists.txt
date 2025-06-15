@@ -40,7 +40,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         nearby/http_request.cc
         nearby/http_status_code.cc
         nearby/http_response.cc
-        #nearby/http_client_impl.cc
+        nearby/http_client_impl.cc
 
 
         thread/Utils.cpp
